@@ -490,6 +490,7 @@ class Article < Content
       sac.save
     end
 
+    second_article = Article.find_by_id(second_article_id)
     second_article.destroy
   end
 end
