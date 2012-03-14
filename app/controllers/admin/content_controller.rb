@@ -6,6 +6,14 @@ class Admin::ContentController < Admin::BaseController
 
   cache_sweeper :blog_sweeper
 
+  ##added
+  def merge
+    #currentArticle = Article.find_by_id(params[:id])
+    #other_article = Article.find_by_id(params[:other_article_id])
+    Article.merge(params[:id], params[:other_article_id])
+    redirect_to :controller => "content", :action => "index"
+  end
+
   def auto_complete_for_article_keywords
     @items = Tag.find_with_char params[:article][:keywords].strip
     render :inline => "<%= raw auto_complete_result @items, 'name' %>"
