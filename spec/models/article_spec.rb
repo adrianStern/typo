@@ -14,6 +14,43 @@ describe Article do
     @articles = []
   end
 
+  ##added
+  it "test merge model function" do
+    a = Article.new
+    a.id = 1111
+    a.body = "Hello"
+    a.title = "Hi"
+    a.author = "Ad"
+    a.allow_comments = '5'
+    a.save!
+    b = Article.new
+    b.id = 2222
+    b.body = "World"
+    b.title = "hey"
+    b.author = "bill"
+    b.allow_comments = '5'
+    b.save!
+
+    cA = Comment.new do |c|
+      c.body = "comment"
+      c.author = 'stern'
+      c.article_id = 1111
+    end
+    cA.save
+
+    cB = Comment.new do |c|
+      c.body = "comment2"
+      c.author = 'zhao'
+      c.article_id = 2222
+    end
+    cB.save
+
+    Article.merge(a.id, b.id)
+    a = Article.find_by_id(1111)
+    a.body.should =~ /Hello.*World/
+    a.author.should == "Ad"
+  end
+
   def assert_results_are(*expected)
     assert_equal expected.size, @articles.size
     expected.each do |i|

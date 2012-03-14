@@ -478,8 +478,6 @@ class Article < Content
     first_article = Article.find_by_id(first_article_id)
     second_article = Article.find_by_id(second_article_id)
 
-    puts first_article.body
-    puts second_article.body
     first_article.body += second_article.body
     first_article.save
 
