@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::ContentController do
   render_views
 
+
   # Like it's a shared, need call everywhere
   shared_examples_for 'index action' do
 
@@ -670,5 +671,16 @@ describe Admin::ContentController do
       end
 
     end
+
+    it 'should call the article merge' do
+      @article1 = Factory(:article)
+      @article2 = Factory(:article)
+
+      Article.should_receive(:merge).with(@article1.id, @article2.id)
+      post :merge, :id => @article1.id, :other_article_id => @article2.id
+    end
+
+
   end
+
 end

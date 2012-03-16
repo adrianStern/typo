@@ -1,0 +1,11 @@
+Deployed app on heroku
+http://pure-dawn-9924.heroku.com/
+Username: admin
+Password: WGJfgdQ
+
+Github stuff - 
+https://github.com/adrianStern/typo
+
+Partners:
+Adrian Stern
+Xiao Zhao

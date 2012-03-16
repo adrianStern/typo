@@ -51,6 +51,19 @@ describe Article do
     a.author.should == "Ad"
   end
 
+  it 'should move over articles comments correctaly while merging' do
+    @article1=Article.create!(:body => "Hello", :title => "article1")
+    @article2=Article.create!(:body=>"World", :title => "article2")
+    @comment1=Factory(:comment, :body => "comment1", :article => @article1)
+    @comment2=Factory(:comment, :body => "comment1", :article => @article2)
+
+    @article1.comments.should == [@comment1]
+    @article2.comments.should == [@comment2]
+    Article.merge(@article1.id, @article2.id)
+    @article1.comments.count.should == 2
+    #@article1.comments.should include(@comment1, @comment2)
+    end
+
   def assert_results_are(*expected)
     assert_equal expected.size, @articles.size
     expected.each do |i|
@@ -582,7 +595,7 @@ describe Article do
     describe "#find_by_permalink" do
       it "uses UTC to determine correct day" do
         @a.save
-        a = Article.find_by_permalink :year => 2011, :month => 2, :day => 21, :permalink => 'a-big-article' 
+        a = Article.find_by_permalink :year => 2011, :month => 2, :day => 21, :permalink => 'a-big-article'
         a.should == @a
       end
     end
@@ -603,7 +616,7 @@ describe Article do
     describe "#find_by_permalink" do
       it "uses UTC to determine correct day" do
         @a.save
-        a = Article.find_by_permalink :year => 2011, :month => 2, :day => 22, :permalink => 'a-big-article' 
+        a = Article.find_by_permalink :year => 2011, :month => 2, :day => 22, :permalink => 'a-big-article'
         a.should == @a
       end
     end
