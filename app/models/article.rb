@@ -478,7 +478,16 @@ class Article < Content
     first_article = Article.find_by_id(first_article_id)
     second_article = Article.find_by_id(second_article_id)
 
-    first_article.body += second_article.body
+    if first_article.body == nil
+      if second_article != nil
+        first_article.body = second_article.body
+      end
+    else
+      if second_article.body != nil
+      first_article.body += second_article.body
+      end
+    end
+
     first_article.save
 
     second_article_comments = Comment.find_all_by_article_id(second_article_id)
